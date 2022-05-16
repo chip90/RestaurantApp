@@ -19,7 +19,7 @@ class MenuController {
     
     static let orderUpdatedNotification = Notification.Name("MenuController.orderUpdated")
     
-    let baseURL = URL(string: "http://127.0.0.1:8000/api/")!
+    let baseURL = URL(string: "https://restaurantapi.chip-snow.com/api/")!
     
     func getCategories(completion: @escaping (Result<[String], Error>) -> Void) {
         let categoryURL = baseURL.appendingPathComponent("categories")
