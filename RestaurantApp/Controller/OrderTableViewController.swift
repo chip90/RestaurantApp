@@ -24,7 +24,6 @@ class OrderTableViewController: UITableViewController {
         MenuController.shared.submitOrder(forMenuIDs: menuIds) { (minutes) in
             DispatchQueue.main.async {
                 if let minutes = minutes {
-                    print("dispatch \(minutes)")
                     self.orderMinutes = minutes
                     self.performSegue(withIdentifier: "ConfirmationSegue", sender: nil)
                 }

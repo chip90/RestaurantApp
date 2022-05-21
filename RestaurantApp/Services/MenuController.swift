@@ -23,7 +23,6 @@ class MenuController {
     
     func getCategories(completion: @escaping (Result<[String], Error>) -> Void) {
         let categoryURL = baseURL.appendingPathComponent("categories")
-        print(categoryURL)
         
         makeRequest(from: categoryURL, completion: completion)
     }
@@ -33,14 +32,12 @@ class MenuController {
         var components = URLComponents(url: initialMenuURL, resolvingAgainstBaseURL: true)!
         components.queryItems = [URLQueryItem(name: "category", value: categoryName)]
         let menuURL = components.url!
-        print(menuURL)
         
         makeRequest(from: menuURL, completion: completion)
     }
     
     func fetchCategories(completion: @escaping ([String]?) -> Void) {
         let categoryURL = baseURL.appendingPathComponent("categories")
-        print(categoryURL)
         
         let task = URLSession.shared.dataTask(with: categoryURL) { (data, response, error) in
             if let data = data, let jsonDictionary = try? JSONSerialization.jsonObject(with: data) as? [String:Any], let categories = jsonDictionary["categories"] as? [String] {
@@ -57,7 +54,6 @@ class MenuController {
         var components = URLComponents(url: initialMenuURL, resolvingAgainstBaseURL: true)!
         components.queryItems = [URLQueryItem(name: "category", value: categoryName)]
         let menuURL = components.url!
-        print(menuURL)
         
         let task = URLSession.shared.dataTask(with: menuURL) { (data, response, error) in
             let jsonDecoder = JSONDecoder()
@@ -78,7 +74,7 @@ class MenuController {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let data: [String: [Int]] = ["menuIds": menuIds]
-        print(data)
+        
         let jsonEncoder = JSONEncoder()
         let jsonData = try? jsonEncoder.encode(data)
         
@@ -86,7 +82,6 @@ class MenuController {
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             let jsonDecoder = JSONDecoder()
             if let data = data, let preparationTime = try? jsonDecoder.decode(PreparationTime.self, from: data) {
-                print(preparationTime.prepTime)
                 completion(preparationTime.prepTime)
             } else {
                 completion(nil)
